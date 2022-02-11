@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "Heltec ESP32 WIFI LoRa Board")(type "KiCad")(uri "${KIPRJMOD}/Heltec ESP32 WIFI LoRa Board.kicad_sym")(options "")(descr ""))
+)
