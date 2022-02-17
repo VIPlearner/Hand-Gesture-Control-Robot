@@ -46,32 +46,39 @@ void loop() {
   Serial.print(AngY);
   Serial.print("  /  AngZ = ");
   Serial.println(mpu.GetAngZ());
-  if (AngY <10 && AngY>-10 && AngX <10 && AngX>-10){
-    speed1 = 0;
-    speed2 = 0;
-  }
-  else if(AngY < -10 && AngY > -60 && AngX <10 && AngX>-10){
-    //forward
-  }
-   else if(AngY < -10 && AngY > -60 && AngX < -10 && AngX > -60){
-   
-  }
-  else if(AngY < -10 && AngY > -60 && AngX > 10 && AngX < 60){
-   
-  }
-  else if(AngY > 10 && AngY < 60 && AngX <10 && AngX>-10){
-    //forward
-  }
-   else if(AngY > 10 && AngY < 60 && AngX < -10 && AngX > -60){
-   
-  }
-  else if(AngY > 10 && AngY < 60 && AngX > 10 && AngX < 60){
-   
-  }
-  else if(AngY > -10 && AngY < -60 && AngX > -10 && AngX < -60){
-    speed - 100 = 2*(AngY - 10);
-  }
-  else if(AngY > 10 && AngY < 60 && AngY > 10 && AngY < 60){
-    }
+//  if (AngY<10 && AngY>-10 && AngX<10 && AngX>-10){
+//    speed1 = 0;
+//    speed2 = 0;
+//  }
+//  else if(AngY<-10 && AngY>-60 && AngX<10 && AngX>-10){
+//    //forward
+//  }
+//   else if(AngY<-10 && AngY>-60 && AngX<-10 && AngX>-60){
+//   
+//  }
+//  else if(AngY<-10 && AngY>-60 && AngX>10 && AngX<60){
+//   
+//  }
+//  else if(AngY>10 && AngY<60 && AngX<10 && AngX>-10){
+//    //forward
+//  }
+//   else if(AngY>10 && AngY<60 && AngX<-10 && AngX>-60){
+//   
+//  }
+//  else if(AngY>10 && AngY<60 &&AngX>10 && AngX<60){
+//   
+//  }
+//  else if(AngY>-10 && AngY<-60 && AngX>-10 && AngX<-60){
+//    speed - 100 = 2*(AngY - 10);
+//  }
+//  else if(AngY>10 && AngY<60 && AngY>10 && AngY<60){
+//    
+//    }
+//  else if(AngY<10 && AngY>-10 && AngX>10 && AngX<60){
+//    
+//    }
+//  else if(AngY<10 && AngY>-10 && AngX<-10 && AngX>-60){
+//
+//    }
   }
     
