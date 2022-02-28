@@ -9,8 +9,8 @@
 #define rightin1 4
 #define rightin2 2
 #define enableright 3
-int speed1, speed2;
-float AngY;
+int leftspeed, rightspeed;
+float AngY, AngX;
 /*
  *  Constructing MPU-6050
  */
@@ -45,122 +45,122 @@ void setup() {
 void loop() {
 
   mpu.Execute();
-  Serial.print("AngX = ");
-  Serial.print(mpu.GetAngX());
-  Serial.print("  /  AngY = ");
-  AngY = mpu.GetAngY();
-  Serial.print(AngY);
-  Serial.print("  /  AngZ = ");
-  Serial.println(mpu.GetAngZ());
+  AngX = mpu.GetAngX(); //retrieve X angle values from mpu6050
+  Serial.print(AngX);
+  Serial.print(", ");
+  AngY = mpu.GetAngY(); ///retrieve Y angle values from mpu6050
+  Serial.println(AngY);
+
+  
   if (AngY<10 && AngY>-10 && AngX<10 && AngX>-10){
     //nomovement
     stopit();
   }
   else if(AngY<-10 && AngY>-60 && AngX<10 && AngX>-10){
     //forward
-    speed1 - 100 = 2*(abs(AngY) - 10);
-    speed2 - 100 = 2*(abs(AngY) - 10);
-    forward(speed1,speed2);
+    leftspeed  = (-4)*abs(AngY) - 40;
+    rightspeed  = (-4)*abs(AngY) - 40;
+    forward(leftspeed,rightspeed);
   }
    else if(AngY<-10 && AngY>-60 && AngX<-10 && AngX>-60){
    //forwardright
-    speed1 - 100 = 2*(abs(AngY) - 10);
-    speed2 - 100 = speed1 - (2*(abs(AngX) - 10));
-    forward(speed1,speed2);
+    leftspeed = (-4)*abs(AngY) - 40;
+    rightspeed = leftspeed - 4*abs(AngX);
+    forward(leftspeed,rightspeed);
   }
   else if(AngY<-10 && AngY>-60 && AngX>10 && AngX<60){
    //forwardleft
-    speed2 - 100 = 2*(abs(AngY) - 10);
-    speed1 - 100 = speed1 - (2*(abs(AngX) - 10));
-    forward(speed1,speed2);
+    rightspeed = (-4)*abs(AngY) - 40;
+    leftspeed = leftspeed - 4*abs(AngX);
+    forward(leftspeed,rightspeed);
   }
   else if(AngY>10 && AngY<60 && AngX<10 && AngX>-10){
     //backward
-    speed1 - 100 = 2*(abs(AngY) - 10);
-    speed2 - 100 = 2*(abs(AngY) - 10);
-    backward(speed1,speed2);
+    leftspeed  = (-4)*abs(AngY) - 40;
+    rightspeed  = (-4)*abs(AngY) - 40;
+    backward(leftspeed,rightspeed);
   }
    else if(AngY>10 && AngY<60 && AngX<-10 && AngX>-60){
    //backwardright
-    speed1 - 100 = 2*(abs(AngY) - 10);
-    speed2 - 100 = speed1 - (2*(abs(AngX) - 10));
-    backward(speed1,speed2);
+    leftspeed = (-4)*abs(AngY) - 40;
+    rightspeed = leftspeed - 4*abs(AngX);
+    backward(leftspeed,rightspeed);
   }
   else if(AngY>10 && AngY<60 &&AngX>10 && AngX<60){
    //backwardleft
-    speed2 - 100 = 2*(abs(AngY) - 10);
-    speed1 - 100 = speed1 - (2*(abs(AngX) - 10));
-    backward(speed1,speed2);
+    rightspeed = (-4)*abs(AngY) - 40;
+    leftspeed = leftspeed - 4*abs(AngX);
+    backward(leftspeed,rightspeed);
   }
-  else if(AngY<10 && AngY>-10 && AngX>10 && AngX<60){
-    //rollleft
-    speed1 - 100 = 2*(abs(AngY) - 10);
-    speed2 - 100 = 2*(abs(AngY) - 10);
-    rollleft(speed1,speed2);
-    }
-  else if(AngY<10 && AngY>-10 && AngX<-10 && AngX>-60){
-  //rollright
-    speed1 - 100 = 2*(abs(AngY) - 10);
-    speed2 - 100 = 2*(abs(AngY) - 10);
-    rollright(speed1,speed2);
-    }
+//  else if(AngY<10 && AngY>-10 && AngX>10 && AngX<60){
+//    //rollleft
+//    leftspeed - 100 = 2*(abs(AngY) - 10);
+//    rightspeed - 100 = 2*(abs(AngY) - 10);
+//    rollleft(leftspeed,rightspeed);
+//    }
+//  else if(AngY<10 && AngY>-10 && AngX<-10 && AngX>-60){
+//  //rollright
+//    leftspeed - 100 = 2*(abs(AngY) - 10);
+//    rightspeed - 100 = 2*(abs(AngY) - 10);
+//    rollright(leftspeed,rightspeed);
+//    }
   }
 
 
-  void forward(uint8_t speed1,uint8_t speed2)
+  void forward(uint8_t leftspeed,uint8_t rightspeed)
 {
-  analogWrite(enableleft , speed1);
- analogWrite(enableright , speed2);
+  analogWrite(enableleft , leftspeed);
+ analogWrite(enableright , rightspeed);
    digitalWrite (leftin1, LOW);
    digitalWrite (leftin2, HIGH);
    digitalWrite (rightin1, HIGH);
    digitalWrite (rightin2, LOW); 
  }
 
- void backward(uint8_t speed1,uint8_t speed2)
+ void backward(uint8_t leftspeed,uint8_t rightspeed)
  {
-   analogWrite(enableleft , speed1/2);
-   analogWrite(enableright , speed2/2);
+   analogWrite(enableleft , leftspeed/2);
+   analogWrite(enableright , rightspeed/2);
     digitalWrite (leftin2, LOW);
     digitalWrite (leftin1,HIGH);
     digitalWrite (rightin2, HIGH);
     digitalWrite (rightin1,LOW);  
  }
 
-void rightback(uint8_t speed1,uint8_t speed2)
+void rightback(uint8_t leftspeed,uint8_t rightspeed)
  {
-  analogWrite(enableright , speed1/2);
-   analogWrite(enableleft , speed2/2);
+  analogWrite(enableright , leftspeed/2);
+   analogWrite(enableleft , rightspeed/2);
     digitalWrite (leftin2,LOW);
     digitalWrite (leftin1,LOW);
     digitalWrite (rightin2, HIGH);
     digitalWrite (rightin1,LOW);  
  }
 
- void leftback(uint8_t speed1,uint8_t speed2)
+ void leftback(uint8_t leftspeed,uint8_t rightspeed)
  {
-  analogWrite(enableright , speed1/2);
-   analogWrite(enableleft , speed2/2);
+  analogWrite(enableright , leftspeed/2);
+   analogWrite(enableleft , rightspeed/2);
     digitalWrite (leftin2, LOW);
     digitalWrite (leftin1,HIGH);
     digitalWrite (rightin2,LOW);
     digitalWrite (rightin1,LOW);  
  }
 
- void rightfront(uint8_t speed1,uint8_t speed2)
+ void rightfront(uint8_t leftspeed,uint8_t rightspeed)
  {
-  analogWrite(enableright , speed1/2);
-   analogWrite(enableleft , speed2/2);
+  analogWrite(enableright , leftspeed/2);
+   analogWrite(enableleft , rightspeed/2);
     digitalWrite (leftin1,LOW);
     digitalWrite (leftin2,LOW);
     digitalWrite (rightin1, HIGH);
     digitalWrite (rightin2,LOW);  
   }
   
- void leftfront(uint8_t speed1,uint8_t speed2)
+ void leftfront(uint8_t leftspeed,uint8_t rightspeed)
  {
-  analogWrite(enableright , speed1/2);
-   analogWrite(enableleft , speed2/2);
+  analogWrite(enableright , leftspeed/2);
+   analogWrite(enableleft , rightspeed/2);
     digitalWrite (leftin1, LOW);
     digitalWrite (leftin2,HIGH);
     digitalWrite (rightin1,LOW);
@@ -174,16 +174,16 @@ void rightback(uint8_t speed1,uint8_t speed2)
   }
   void rollright()
   {
-   analogWrite(enableleft , speed1);
-   analogWrite(enableright , speed2);
+   analogWrite(enableleft , leftspeed);
+   analogWrite(enableright , rightspeed);
    digitalWrite (leftin1, LOW);
    digitalWrite (leftin2, HIGH);
    digitalWrite (rightin2, HIGH);
     digitalWrite (rightin1,LOW);  
     }
    void rollleft(){
-    analogWrite(enableleft , speed1);
-   analogWrite(enableright , speed2);
+    analogWrite(enableleft , leftspeed);
+   analogWrite(enableright , rightspeed);
    digitalWrite (leftin2, LOW);
    digitalWrite (leftin1, HIGH);
    digitalWrite (rightin1, HIGH);
