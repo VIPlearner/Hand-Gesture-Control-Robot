@@ -58,37 +58,37 @@ void loop() {
   }
   else if(AngY<-10 && AngY>-60 && AngX<10 && AngX>-10){
     //forward
-    leftspeed  = (-4)*abs(AngY) - 40;
-    rightspeed  = (-4)*abs(AngY) - 40;
+    leftspeed  = 4*abs(AngY) - 40;
+    rightspeed  = 4*abs(AngY) - 40;
     forward(leftspeed,rightspeed);
   }
    else if(AngY<-10 && AngY>-60 && AngX<-10 && AngX>-60){
    //forwardright
-    leftspeed = (-4)*abs(AngY) - 40;
+    leftspeed = 4*abs(AngY) - 40;
     rightspeed = leftspeed - 4*abs(AngX);
     forward(leftspeed,rightspeed);
   }
   else if(AngY<-10 && AngY>-60 && AngX>10 && AngX<60){
    //forwardleft
-    rightspeed = (-4)*abs(AngY) - 40;
+    rightspeed = 4*abs(AngY) - 40;
     leftspeed = leftspeed - 4*abs(AngX);
     forward(leftspeed,rightspeed);
   }
   else if(AngY>10 && AngY<60 && AngX<10 && AngX>-10){
     //backward
-    leftspeed  = (-4)*abs(AngY) - 40;
-    rightspeed  = (-4)*abs(AngY) - 40;
+    leftspeed  = 4*abs(AngY) - 40;
+    rightspeed  = 4*abs(AngY) - 40;
     backward(leftspeed,rightspeed);
   }
    else if(AngY>10 && AngY<60 && AngX<-10 && AngX>-60){
    //backwardright
-    leftspeed = (-4)*abs(AngY) - 40;
+    leftspeed = 4*abs(AngY) - 40;
     rightspeed = leftspeed - 4*abs(AngX);
     backward(leftspeed,rightspeed);
   }
   else if(AngY>10 && AngY<60 &&AngX>10 && AngX<60){
    //backwardleft
-    rightspeed = (-4)*abs(AngY) - 40;
+    rightspeed = 4*abs(AngY) - 40;
     leftspeed = leftspeed - 4*abs(AngX);
     backward(leftspeed,rightspeed);
   }
